@@ -11,7 +11,7 @@
 // glut32.dll, and glut32.lib in the directory of your project.
 // OR, see GlutDirectories.txt for a better place to put them.
 
-
+#define GL_SILENCE_DEPRECATION
 #include <cmath>
 #include <cstring>
 #include <GLUT/glut.h>
@@ -21,6 +21,7 @@
 #include <vector>
 #include <string>
 #include "circle.h"
+#include "program2.h"
 
 
 
@@ -96,25 +97,29 @@ void display(void)
 {
     glClear(GL_COLOR_BUFFER_BIT);
 
-    // Test lines that draw all three shapes and some text.
-    // Delete these when you get your code working.
-    int i;
+    int i = 0;
     for(i = 0; i < circles.size(); i++){
-        //Code produces 10 circles
-        if(circles[i].getX() + circles[i].getRadius() + circles[i].getdX() >= screen_x || circles[i].getX() - circles[i].getRadius() + circles[i].getdX() < 0){
-            circles[i].setdX();
-        }
-        if(circles[i].getY() + circles[i].getRadius() + circles[i].getdY() >= screen_y || circles[i].getY() - circles[i].getRadius() + circles[i].getdY() < 0){
-            circles[i].setdY();
-            
-        }
-        circles[i].mX += circles[i].getdX();
-        circles[i].mY += circles[i].getdY();
-        // end of good producing code; everything above is testing
-        
-        glColor3d(circles[i].getRed(), circles[i].getGreen(), circles[i].getBlue());
-        DrawCircle(circles[i].getX(), circles[i].getY(), circles[i].getRadius());
+        circles[i].update(screen_x, screen_y);
+        circles[i].draw();
     }
+    
+    // Working code attempting to clean display function by putting work into circle class
+    //int i;
+//    for(i = 0; i < circles.size(); i++){
+//        //Code produces 10 circles
+//        if(circles[i].getX() + circles[i].getRadius() + circles[i].getdX() >= screen_x || circles[i].getX() - circles[i].getRadius() + circles[i].getdX() < 0){
+//            circles[i].setdX();
+//        }
+//        if(circles[i].getY() + circles[i].getRadius() + circles[i].getdY() >= screen_y || circles[i].getY() - circles[i].getRadius() + circles[i].getdY() < 0){
+//            circles[i].setdY();
+//
+//        }
+//        circles[i].mX += circles[i].getdX();
+//        circles[i].mY += circles[i].getdY();
+//
+//        glColor3d(circles[i].getRed(), circles[i].getGreen(), circles[i].getBlue());
+//        DrawCircle(circles[i].getX(), circles[i].getY(), circles[i].getRadius());
+//    }
     glutSwapBuffers();
     glutPostRedisplay();
 }

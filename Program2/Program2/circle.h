@@ -10,8 +10,9 @@
 #define circle_h
 
 #include <stdio.h>
+//#include "program2.cpp"
 
-#endif /* circle_h */
+
 
 class circle {
 public:
@@ -20,6 +21,8 @@ public:
     double getX();
     double getY();
     double getRadius();
+    double getNextX();
+    double getNextY();
     double getdX();
     double getdY();
     double getRed();
@@ -27,8 +30,11 @@ public:
     double getBlue();
     void setdX();
     void setdY();
+    void update(double screen_X, double scrren_Y);
+    void draw();
     
-    
+private:
     double mX, mY, mRadius, dX, dY, mRed, mGreen, mBlue;
     
 };
+#endif /* circle_h */
