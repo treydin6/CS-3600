@@ -8,6 +8,7 @@
 #define GL_SILENCE_DEPRECATION
 #include "circle.h"
 #include "program2.h"
+#include "CollisionAware.h"
 #include <GLUT/glut.h>
 
 circle::circle(){}
@@ -63,23 +64,53 @@ double circle::getdY(){
     return this->dY;
 }
 
-void circle::setdX(){
+void circle::inversedX(){
     this->dX = -dX;
 }
 
-void circle::setdY(){
+void circle::inversedY(){
     this->dY = -dY;
 }
 
-void circle::update(double screen_x, double screen_y){
+void circle::setdX(double dx){
+    this->dX = dx;
+}
+
+void circle::setdY(double dy){
+    this->dY = dy;
+}
+
+void circle::update(double screen_x, double screen_y, int currentBall, std::vector<circle>& mCircles){
     if(getX() + getRadius() + getdX() >= screen_x || getX() - getRadius() + getdX() < 0){
-        setdX();
+        inversedX();
     }
     if(getY() + getRadius() + getdY() >= screen_y || getY() - getRadius() + getdY() < 0){
-        setdY();
+        inversedY();
     }
     this->mX += getdX();
     this->mY += getdY();
+    
+    // state of ball -> ball
+    // take out of circle class and make seperate function?
+    unsigned int i;
+    double x1, y1, r1, x2, y2, r2, distance;
+    for(i = currentBall + 1; i < mCircles.size(); i++){
+        x1 = getX();
+        y1 = getY();
+        r1 = getRadius();
+        x2 = mCircles[i].getNextX();
+        y2 = mCircles[i].getNextY();
+        r2 = mCircles[i].getRadius();
+        distance = sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+        if(distance < r1 + r2){
+            Collide(currentBall, i, mCircles);
+        }
+    }
+}
+
+void circle::addGravity(){
+    this->dY -= .2;
+    this->dY -= .2;
 }
 
 void circle::draw(){
