@@ -10,9 +10,7 @@
 #define circle_h
 
 #include <stdio.h>
-#include <vector>
-#include <cmath>
-
+//#include "program2.cpp"
 
 
 
@@ -30,12 +28,9 @@ public:
     double getRed();
     double getGreen();
     double getBlue();
-    void inversedX();
-    void inversedY();
-    void setdX(double dx);
-    void setdY(double dy);
-    void update(double screen_X, double scrren_Y, int currentBall, std::vector<circle>& mCircles);
-    void addGravity();
+    void setdX();
+    void setdY();
+    void update(double screen_X, double scrren_Y);
     void draw();
     
 private:
