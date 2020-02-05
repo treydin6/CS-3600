@@ -77,6 +77,8 @@ public:
     void ParticleSetState(double * src);
     void ParticleGetDerivative(double * dst);
     void IncrementTime(double DeltaT);
+    void setDeltaT(double deltaT);
+    double getDeltaT();
 
 private:
     void ClearForces();
@@ -85,6 +87,7 @@ private:
     vector<Particle*> pArray;
     vector<Force*> fArray;
     double time;
+    double deltaT;
 };
 
 void EulerStep(ParticleSystem & ps, double DeltaT);

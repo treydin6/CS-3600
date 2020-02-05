@@ -9,28 +9,30 @@ SpringForce::SpringForce(Particle* p1_temp,
                          Particle* p2_temp,
                          double spring_constant_temp,
                          double damping_constant_temp,
-                         double rest_length_temp):
+                         double rest_length_temp, double red, double green, double blue):
                         p1(p1_temp),
                         p2(p2_temp),
+                        mRed(red),
+                        mGreen(green),
+                        mBlue(blue),
                         spring_constant(spring_constant_temp),
                         damping_constant(damping_constant_temp),
                         rest_length(rest_length_temp)
 {
-    if(rest_length == 0)
-    {
-        double pos1[DIM];
-        double pos2[DIM];
-        p1->GetPosition(pos1);
-        p2->GetPosition(pos2);
 
-        int d;
-        for(d=0; d<DIM; d++)
-        {
-            double dif = pos1[d] - pos2[d];
-            rest_length += dif*dif;
-        }
-        rest_length = sqrt(rest_length);
+    double pos1[DIM];
+    double pos2[DIM];
+    p1->GetPosition(pos1);
+    p2->GetPosition(pos2);
+    double naturalRL = 0.0;
+    int d;
+    for(d=0; d<DIM; d++)
+    {
+        double dif = pos1[d] - pos2[d];
+        naturalRL += dif*dif;
     }
+    naturalRL = sqrt(naturalRL);
+    rest_length *= naturalRL;
 }
 
 void SpringForce::Apply()
@@ -84,6 +86,26 @@ Particle* SpringForce::GetParticle1()
 Particle* SpringForce::GetParticle2()
 {
     return p2;
+}
+
+void SpringForce::setRed(double red){
+    this->mRed = red;
+}
+void SpringForce::setGreen(double green){
+    this->mGreen = green;
+}
+void SpringForce::setBlue(double blue){
+    this->mBlue = blue;
+}
+
+double SpringForce::getRed(){
+    return this->mRed;
+}
+double SpringForce::getGreen(){
+    return this->mGreen;
+}
+double SpringForce::getBlue(){
+    return this->mBlue;
 }
 
 FORCE_TYPE SpringForce::Type()

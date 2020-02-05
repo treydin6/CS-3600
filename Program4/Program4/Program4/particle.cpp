@@ -99,6 +99,14 @@ void ParticleSystem::IncrementTime(double DeltaT)
     time += DeltaT;
 }
 
+void ParticleSystem::setDeltaT(double deltaT){
+    this->deltaT = deltaT;
+}
+
+double ParticleSystem::getDeltaT(){
+    return this->deltaT;
+}
+
 void ParticleSystem::ParticleGetState(double * dst)
 {
     int n = GetNumParticles();
@@ -204,6 +212,7 @@ void ParticleSystem::ComputeForces()
         fArray[i]->Apply();
     }
 }
+
 
 int ParticleSystem::GetNumParticles()
 {
@@ -370,6 +379,8 @@ void RungeKuttaStep(ParticleSystem & ps, double DeltaT)
 
     // increment time
     ps.IncrementTime(DeltaT);
+    
+    
 
     // cleanup
     delete [] oldPositions;

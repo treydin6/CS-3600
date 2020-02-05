@@ -28,13 +28,21 @@ public:
 class SpringForce : public Force
 {
 public:
-    SpringForce(Particle* p1, Particle *p2, double spring_constant, double damping_constant, double rest_length=0);
+    SpringForce(Particle* p1, Particle *p2, double spring_constant, double damping_constant, double rest_length, double red, double green, double blue);
 
     virtual void Apply();
     virtual FORCE_TYPE Type();
 
     Particle* GetParticle1();
     Particle* GetParticle2();
+    void setRed(double red);
+    void setGreen(double green);
+    void setBlue(double blue);
+    
+    double getRed();
+    double getGreen();
+    double getBlue();
+    
 
 private:
     Particle* p1;
@@ -42,6 +50,9 @@ private:
     double rest_length;
     double spring_constant;
     double damping_constant;
+    double mRed;
+    double mGreen;
+    double mBlue;
 };
 
 //
