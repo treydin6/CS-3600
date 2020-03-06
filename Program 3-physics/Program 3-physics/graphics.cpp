@@ -32,6 +32,7 @@ double screen_y = 500;
 
 // Vector to store circle objects;
 std::vector<circle> circles;
+int gravityDirection = 0;
 
 //
 // Functions that draw basic primitives
@@ -100,7 +101,7 @@ void display(void)
     int i = 0;
     for(i = 0; i < circles.size(); i++){
         circles[i].update(screen_x, screen_y, circles, i);
-        circles[i].setGravity();
+        circles[i].setGravity(gravityDirection);
         circles[i].draw();
     }
     
@@ -119,7 +120,16 @@ void keyboard(unsigned char c, int x, int y)
             exit(0);
             break;
         case 'b':
-            // do something when 'b' character is hit.
+            gravityDirection = 0;
+            break;
+        case 't':
+            gravityDirection = 1;
+            break;
+        case 'l':
+            gravityDirection = 2;
+            break;
+        case 'r':
+            gravityDirection = 3;
             break;
         default:
             return; // if we don't care, return without glutPostRedisplay()

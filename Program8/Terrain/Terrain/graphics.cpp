@@ -36,12 +36,14 @@ bool LeftClick = false;
 bool RightClick = false;
 bool MiddleClick = false;
 bool power = false;
+// colors for mountain
+double red, green, blue;
 
 viewtype current_view = rat_view;
 
-Maze gMaze;
+
 // grat(x, y, r, speed degrees
-Rat gRat(.5, .5, .2, .03, 90);
+Rat gRat(1.5, 3.5, .2, .03, 45);
 
 
 //
@@ -106,6 +108,19 @@ void DrawText(double x, double y, const char *string)
     glDisable(GL_BLEND);
 }
 
+double getZ(double x, double y){
+    double z = 0;
+    double zScale = 0.75;
+    z += 2*sin(.4 * y);
+    z += 1.5 * cos(.3 * x);
+    z += 4 * sin(.11 * x) * cos(.3 * y);
+    //z += 6* sin(.11 * x) * cos(0.3 * y);
+    
+    if( z <= -15){
+        return 0;
+    }
+    return z * zScale;
+}
 
 //
 // GLUT callback functions
@@ -120,18 +135,18 @@ void display(void)
     if(current_view == perspective_view){
         glEnable(GL_DEPTH_TEST);
         glLoadIdentity();
-        gluLookAt(-3,-3,7,  3,3,0,  0,0,1);
+        gluLookAt(-15,-15,38,  18,18,5,  0,0,1);
     } else if(current_view == top_view){
         glDisable(GL_DEPTH_TEST);
         glLoadIdentity();
     } else if(current_view == move_view){
         glEnable(GL_DEPTH_TEST);
         glLoadIdentity();
-        gluLookAt(gRat.getX(), gRat.getY() -3, 10,   gRat.getX(),gRat.getY(),0,  0,0,1);
+        gluLookAt(gRat.getX(), gRat.getY()-3, 50,   gRat.getX(),gRat.getY(),0,  0,0,1);
     } else{ // current_view == rat_view
         glEnable(GL_DEPTH_TEST);
         glLoadIdentity();
-        double z_level = .25;
+        double z_level = getZ(gRat.getX(), gRat.getY()) + 0.25;
         double x = gRat.getX();
         double y = gRat.getY();
         double radians = gRat.getDegrees() * 3.1415926 / 180.;
@@ -139,10 +154,15 @@ void display(void)
         double dY = std::sin(radians);
         double at_x = x + dX;
         double at_y = y + dY;
-        double at_z = z_level;
-        
+        double at_z = getZ(at_x, at_y) + .5;//z_level;
+        if(at_z < -.5){
+            at_z = -.5;
+        }
+        if(z_level < -.5){
+            z_level = -.5;
+        }
         gluLookAt(x,y,z_level,  at_x,at_y,at_z,  0,0,1);
-    
+        
         
         
     }
@@ -168,9 +188,59 @@ void display(void)
         }
     }
     
+    // draw terrain
+    int x, y;
+    
+    for(x = 0; x < mapSize; x++){
+        for(y = 0; y < mapSize; y++){
+            int red = (x * 374920 + y * 830274) % 256;
+            int green = (x * 940274 + y * 340274) % 256;
+            int blue = (x * 312947 + y * 826174) % 256;
+            x = (double)x;
+            y = (double)y;
+            
+            if(x % 2 == 0){
+                red = 0;
+                green = 0;
+                blue= 0;
+            }
+            if(x % 2 == 1){
+                red = 200;
+                green = 200;
+                blue= 200;
+            }
+            glColor3ub(red, green, blue);
+            glBegin(GL_QUADS);
+            glVertex3d(x, y, getZ(x, y));
+            glVertex3d(x, y+1, getZ(x, y+1));
+            glVertex3d(x+1, y+1, getZ(x+1, y+1));
+            glVertex3d(x+1, y, getZ(x+1, y));
+            
+            
+        }
+        glEnd();
+    }
+    
+    // draw water
+    int wx, wy; // WaterX, WaterY
+    for(wx = 0; wx < mapSize; wx++){
+        for(wy = 0; wy < mapSize; wy++){\
+            wx = (double)wx;
+            wy = (double)wy;
+            glColor3ub(0,0, 255);
+            glBegin(GL_QUADS);
+            glVertex3d(wx, wy, -1);
+            glVertex3d(wx, wy+1, -1);
+            glVertex3d(wx+1, wy+1, -1);
+            glVertex3d(wx+1, wy, -1);
+
+        }
+        glEnd();
+    }
+    
+    
+    
     //glColor3ub(100,100,255);
-    gMaze.RemoveWalls();
-    gMaze.Draw();
     gRat.draw();
     
     if(current_view != rat_view){
@@ -180,6 +250,8 @@ void display(void)
     glutSwapBuffers();
     glutPostRedisplay();
 }
+
+
 
 
 // This callback function gets called by the Glut
@@ -234,7 +306,7 @@ void setPerspectiveView(int width, int height){
     glLoadIdentity();
     double aspectRatio = (GLdouble)width / (GLdouble)height;
     //gluPerspective(field of View, aspectRatio, Z near, Z far);
-    gluPerspective(38.0, aspectRatio, .1, 30.0);
+    gluPerspective(38.0, aspectRatio, .1, 150.0);
     glMatrixMode(GL_MODELVIEW);
 }
 
@@ -243,7 +315,7 @@ void setMoveView(int width, int height){
     glLoadIdentity();
     double aspectRatio = (GLdouble)width / (GLdouble)height;
     //gluPerspective(field of View, aspectRatio, Z near, Z far);
-    gluPerspective(38.0, aspectRatio, .1, 30.0);
+    gluPerspective(38.0, aspectRatio, .1, 150.0);
     glMatrixMode(GL_MODELVIEW);
 }
 
@@ -269,11 +341,11 @@ void reshape(int width, int height)
     }
     
     // Set the projection mode to 2D orthographic, and set the world coordinates:
-//    glMatrixMode(GL_PROJECTION);
-//    glLoadIdentity();
-//    const double MARGIN = 0.5;
-//    gluOrtho2D(-MARGIN, WIDTH+MARGIN, -MARGIN, HEIGHT+MARGIN);
-//    glMatrixMode(GL_MODELVIEW);
+    //    glMatrixMode(GL_PROJECTION);
+    //    glLoadIdentity();
+    //    const double MARGIN = 0.5;
+    //    gluOrtho2D(-MARGIN, WIDTH+MARGIN, -MARGIN, HEIGHT+MARGIN);
+    //    glMatrixMode(GL_MODELVIEW);
     
 }
 

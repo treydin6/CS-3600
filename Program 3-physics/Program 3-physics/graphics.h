@@ -9,6 +9,7 @@
 #ifndef program2_h
 #define program2_h
 
+//int gravityDirection;
 void DrawCircle(double x1, double y1, double radius);
 
 #endif /* program2_h */

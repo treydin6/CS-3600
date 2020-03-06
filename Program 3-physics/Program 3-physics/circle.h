@@ -9,8 +9,7 @@
 #ifndef circle_h
 #define circle_h
 #include <vector>
-#include "circle.h"
-//#include "collide.h"
+//#include "circle.h"
 #include <cmath>
 
 
@@ -29,12 +28,15 @@ public:
     double getRed();
     double getGreen();
     double getBlue();
+    void setRed(double red);
+    void setGreen(double green);
+    void setBlue(double blue);
     
     void inverseDX();
     void inverseDY();
     void setdX(double dx);
     void setdY(double dy);
-    void setGravity();
+    void setGravity(int gravityDirection);
     
     void update(double screen_X, double scrren_Y, std::vector<circle>& circles, int currentBall);
     void draw();

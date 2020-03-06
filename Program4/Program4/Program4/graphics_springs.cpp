@@ -249,7 +249,14 @@ void mouse(int mouse_button, int state, int x, int y)
     glutPostRedisplay();
 }
 
-//void InitParticles1()
+//void InitParticles1(){
+//    Particle *p1 = new Particle(100, 400,  4.0, -1.0,  10, true);
+//    PS.AddParticle(p1);
+//
+//    Particle *p2 = new Particle(200, 400,  4.0, -1.0,  10, false);
+//    PS.AddParticle(p2);
+//
+//}
 //{
 //    Particle *p1 = new Particle(100, 200,  4.0, -1.0,  10, false);
 //    PS.AddParticle(p1);
@@ -455,7 +462,7 @@ void InitializeMyStuff()
     
     
     // Notes from class
-    string file = "t.txt";
+    string file = "M.txt";
     ifstream fin(file);
     if(!fin){
         exit(0);
@@ -472,7 +479,7 @@ void InitializeMyStuff()
               PS.AddParticle(p);
         } else if(type == "s"){
             fin >> p1 >> p2 >> SPx >> SPy >> RL >> red >> green >> blue >> std::ws;
-            
+
             Particle * pp1 = PS.GetParticle(p1);
             Particle * pp2 = PS.GetParticle(p2);
             SpringForce * sf = new SpringForce(pp1, pp2, SPx, SPy, RL, red, green, blue );
@@ -486,7 +493,7 @@ void InitializeMyStuff()
         }
     }
     fin.close();
-    
+//
     
     //InitParticles1();
 }

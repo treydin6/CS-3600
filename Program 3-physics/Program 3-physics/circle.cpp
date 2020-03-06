@@ -57,6 +57,17 @@ double circle::getBlue(){
     return this->mBlue;
 }
 
+void circle::setRed(double red){
+    this->mRed = red;
+}
+
+void circle::setGreen(double green){
+    this->mGreen = green;
+}
+void circle::setBlue(double blue){
+    this->mBlue = blue;
+}
+
 double circle::getdX(){
     return this->dX;
 }
@@ -80,8 +91,20 @@ void circle::setdY(double dy){
     this->dY = dy;
 }
 
-void circle::setGravity(){
-    this->dY -= .2;
+void circle::setGravity(int gravityDirection){
+    //this->dY -= .2;
+    if(gravityDirection == 0){
+        this->dY -= .2;
+    }
+    if(gravityDirection == 1){
+        this->dY += .2;
+    }
+    if(gravityDirection == 2){
+        this->dX -=.2;
+    }
+    if(gravityDirection == 3){
+        this->dX += .2;
+    }
 }
 
 void circle::update(double screen_x, double screen_y, std::vector<circle>& circles, int currentBall){
