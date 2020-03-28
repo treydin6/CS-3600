@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		18595104242EF1E700173AD4 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18595103242EF1E700173AD4 /* main.cpp */; };
 		1859510C242EF1EF00173AD4 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1859510B242EF1EF00173AD4 /* GLUT.framework */; };
 		1859510E242EF1F600173AD4 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1859510D242EF1F600173AD4 /* OpenGL.framework */; };
+		18595111242EF28800173AD4 /* graphics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1859510F242EF28800173AD4 /* graphics.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -26,9 +26,10 @@
 
 /* Begin PBXFileReference section */
 		18595100242EF1E700173AD4 /* BezierCurve */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = BezierCurve; sourceTree = BUILT_PRODUCTS_DIR; };
-		18595103242EF1E700173AD4 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		1859510B242EF1EF00173AD4 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
 		1859510D242EF1F600173AD4 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		1859510F242EF28800173AD4 /* graphics.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = graphics.cpp; sourceTree = "<group>"; };
+		18595110242EF28800173AD4 /* graphics.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = graphics.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,7 +65,8 @@
 		18595102242EF1E700173AD4 /* BezierCurve */ = {
 			isa = PBXGroup;
 			children = (
-				18595103242EF1E700173AD4 /* main.cpp */,
+				1859510F242EF28800173AD4 /* graphics.cpp */,
+				18595110242EF28800173AD4 /* graphics.h */,
 			);
 			path = BezierCurve;
 			sourceTree = "<group>";
@@ -134,7 +136,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				18595104242EF1E700173AD4 /* main.cpp in Sources */,
+				18595111242EF28800173AD4 /* graphics.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
