@@ -22,3 +22,9 @@
 * Program 9 -- create a chess board with pieces
 
 * Program 10 -- create a program to create, alter and draw Bezier curves
+
+* Program 11 -- create a ray tracer. pt1
+
+* Program 12 -- create a ray tracer pt2
+
+* Program 13 -- add textures to a previous assignment
